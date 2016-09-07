@@ -12,7 +12,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /property:
+  /properties:
      x-swagger-router-controller: property
      post:
        description: create a specific property in Spotippos
@@ -32,7 +32,48 @@ paths:
            description: Error
            schema:
              $ref: "#/definitions/ErrorResponse"
-  /property/{id}:
+     get:
+       description: search properties in Spotippos
+       operationId: getProperties
+       parameters:
+        - name: ax
+          type: integer
+          in: query
+          required: true
+          minimum: 0
+          maximum: 1400
+        - name: ay
+          type: integer
+          in: query
+          required: true
+          minimum: 0
+          maximum: 1000
+        - name: bx
+          type: integer
+          in: query
+          required: true
+          minimum: 0
+          maximum: 1400
+        - name: by
+          type: integer
+          in: query
+          required: true
+          minimum: 0
+          maximum: 1000
+       responses:
+         "200":
+           description: Success
+           schema:
+             $ref: "#/definitions/GetPropertiesResponse"
+         "404":
+             description: NotFound
+             schema:
+               $ref: "#/definitions/NotFoundResponse"
+         default:
+           description: Error
+           schema:
+             $ref: "#/definitions/ErrorResponse"
+  /properties/{id}:
      x-swagger-router-controller: property
      get:
        description: get a specific property in Spotippos
@@ -58,6 +99,17 @@ paths:
   /swagger:
     x-swagger-pipe: swagger_raw
 definitions:
+  GetPropertiesResponse:
+    required:
+      - foundProperties
+      - properties
+    properties:
+      foundProperties:
+        type: integer
+      properties:
+        type: array
+        items:
+          $ref: "#/definitions/Property"
   GetPropertyResponse:
     required:
       - _id
@@ -119,19 +171,15 @@ definitions:
         type: string
   GeneralResponse:
     type: object
+    required:
+      - message
     properties:
-      success:
-        type: number
-        description: returns 1 if successful
       message:
         type: string
         description: a short comment
       entityId:
         type: string
         description: a short comment
-    required:
-      - success
-      - message
   ErrorResponse:
     required:
       - message

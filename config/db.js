@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
+mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/viva-challenge');
 
 mongoose.connection.on('connected', function () {

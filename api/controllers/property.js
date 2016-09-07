@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 var Property = mongoose.model('Property');
+var Province = mongoose.model('Province');
 
 function getProperty(req, res, next) {
 	var id = req.swagger.params.id.value;
@@ -23,7 +24,7 @@ function getProperty(req, res, next) {
 			return next();
 
 		}, function (error) {
-			console.log(error);
+
 			res.status(500).send({
 		        message: error.message
 		    });
@@ -42,28 +43,64 @@ function postProperty(req, res, next) {
 		});
 	}
 
-	newProperty.provinces = ["TODO"];
+	Province
+		.findByCoordinates(newProperty.x, newProperty.y)
+		.then(function (provinces) {
+			var names = provinces.map(function (province) {
+				return province.name;
+			})
 
-	Property
-		.create(newProperty)
-		.then(function (property) {
-			res.status(200).send({
-				success: 1,
-		        message: "property inserted with success",
-				entityId: property._id
-		    });
+			newProperty.provinces = names;
+
+			Property
+				.create(newProperty)
+				.then(function (property) {
+					res.status(200).send({
+				        message: "property inserted with success",
+						entityId: property._id
+				    });
+				}, function (error) {
+					res.status(500).send({
+				        message: JSON.stringify(error)
+				    });
+
+					return next(error);
+				})
+
 		}, function (error) {
-
 			res.status(500).send({
-		        message: JSON.stringify(error)
-		    });
+				message: JSON.stringify(error)
+			});
 
 			return next(error);
 		})
+}
 
+function getProperties(req, res, next) {
+	var ax = req.swagger.params.ax.value;
+	var ay = req.swagger.params.ay.value;
+	var bx = req.swagger.params.bx.value;
+	var by = req.swagger.params.by.value;
+
+	Property
+		.find({
+			x: { $gte: ax, $lte: bx },
+			y: { $gte: by, $lte: ay }
+		})
+		.then(function (properties) {
+			res.status(200).send({
+				foundProperties: properties.length,
+				properties: properties
+			});
+		}, function (error) {
+			res.status(500).send({
+				message: JSON.stringify(error)
+			});
+		});
 }
 
 module.exports = {
   getProperty: getProperty,
-  postProperty: postProperty
+  postProperty: postProperty,
+  getProperties: getProperties
 };

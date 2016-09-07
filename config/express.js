@@ -7,7 +7,7 @@ var app = express();
 //Configuration
 app.set('port', process.env.PORT || 10010);
 
-load('models', {cwd: 'api'})
+load('models/index', {cwd: 'api'})
 	.then('controllers')
 	.into(app);
 

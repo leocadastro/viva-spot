@@ -37,4 +37,24 @@ var schema = mongoose.Schema({
 	}
 });
 
-module.exports = mongoose.model('Province', schema)
+/*schema.statics = {
+	findByCoordinates: function(x, y) {
+	  return this.find({
+		  'boundaries.upperLeft.x': { $lte: x },
+		  'boundaries.upperLeft.y': { $gte: y },
+		  'boundaries.bottomRight.x': { $gte: x },
+		  'boundaries.bottomRight.y': { $lte: y}
+	  });
+	}
+}*/
+
+schema.statics.findByCoordinates = function(x, y) {
+	  return this.find({
+		  'boundaries.upperLeft.x': { $lte: x },
+		  'boundaries.upperLeft.y': { $gte: y },
+		  'boundaries.bottomRight.x': { $gte: x },
+		  'boundaries.bottomRight.y': { $lte: y}
+	  });
+  };
+
+module.exports = mongoose.model('Province', schema);

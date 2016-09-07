@@ -3,11 +3,17 @@ const mongoose = require('mongoose');
 var schema = mongoose.Schema({
 	x: {
 		type: Number,
-		required: true
+		required: true,
+		min: 0,
+		max: 1400,
+		index: true
 	},
 	y: {
 		type: Number,
-		required: true
+		required: true,
+		min: 0,
+		max: 1000,
+		index: true
 	},
 	title: {
 		type: String,
