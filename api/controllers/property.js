@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 var Property = mongoose.model('Property');
 var Province = mongoose.model('Province');
 
-function getProperty(req, res, next) {
+var getProperty = function (req, res, next) {
 	var id = req.swagger.params.id.value;
 
 	Property
@@ -33,7 +33,7 @@ function getProperty(req, res, next) {
 		});
 }
 
-function postProperty(req, res, next) {
+var postProperty = function (req, res, next) {
 
 	var newProperty = req.swagger.params.property.value;
 
@@ -49,6 +49,14 @@ function postProperty(req, res, next) {
 			var names = provinces.map(function (province) {
 				return province.name;
 			})
+
+			if (names.length == 0) {
+				res.status(404).send({
+					message: "Province not found"
+				});
+
+				return next()
+			}
 
 			newProperty.provinces = names;
 
@@ -73,10 +81,10 @@ function postProperty(req, res, next) {
 			});
 
 			return next(error);
-		})
+		});
 }
 
-function getProperties(req, res, next) {
+var getProperties = function (req, res, next) {
 	var ax = req.swagger.params.ax.value;
 	var ay = req.swagger.params.ay.value;
 	var bx = req.swagger.params.bx.value;

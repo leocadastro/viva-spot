@@ -45,8 +45,7 @@ var schema = mongoose.Schema({
 		max: 240
 	},
 	provinces: {
-		type: [String],
-		required: true
+		type: [String]
 	}
 });
 
