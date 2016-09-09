@@ -14,6 +14,9 @@ describe('/properties', function() {
 		Property.remove({}, function(err) {
 		    console.log('Properties removed before running tests')
 		 });
+
+		 if (mongoose.connection.db) return done();
+
 	   done()
 	})
 
@@ -50,7 +53,8 @@ describe('/properties', function() {
 			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 			  "beds": 2,
 			  "baths": 3,
-			  "squareMeters": 210
+			  "squareMeters": 210,
+			  "provinces": ['Gode']
 		  })
           .end(function(err, res) {
 			expect(res.statusCode).to.equal(200);
