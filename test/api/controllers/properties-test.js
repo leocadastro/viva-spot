@@ -8,6 +8,7 @@ var request = require('supertest');
 
 describe('/properties', function() {
   describe('post', function() {
+
     it('should respond with 200 Success', function(done) {
       /*eslint-disable*/
       var schema = {

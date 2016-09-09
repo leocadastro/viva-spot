@@ -13,16 +13,22 @@ The legend: [Spotippo](https://github.com/VivaReal/code-challenge/blob/master/ba
 - Search a property by coordinates: `/v1/properties?ax={integer}&ay={integer}&bx={integer}&by={integer}` [GET]
 
 ## Running
-- Setup port
-- Setup MongoDb connection
-- run npm start
+Configure Port and MongoDb connection
+
+```sh
+$ cd viva-challenge
+$ npm install
+$ npm start
+```
 
 ## Testing
-- Setup dev MongoDb connection
-- run npm test
+```sh
+$ cd viva-challenge
+$ npm test
+```
 
 ## Next Features
-- Implement Auth on post with JWT
+- Implement Auth with JWT on creating properties 
 - Implement logs
 - Improve tests (mocks)
 - Docker
