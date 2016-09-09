@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.1"
+  version: "0.5"
   title: Viva Challenge Code
 host: localhost:10010
 basePath: /v1
