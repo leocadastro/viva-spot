@@ -7,6 +7,14 @@ var Province = mongoose.model('Province');
 var getProperty = function (req, res, next) {
 	var id = req.swagger.params.id.value;
 
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		res.status(500).send({
+			message: "Invalid Id"
+		});
+
+		return next();
+	}
+
 	Property
 		.findById(id).exec()
 		.then(function (property) {
