@@ -28,6 +28,7 @@ $ npm test
 ```
 
 ## Dependencies
+- NodeJs
 - MongoDb
 
 ## Next Features
