@@ -27,6 +27,9 @@ $ cd viva-challenge
 $ npm test
 ```
 
+## Dependencies
+- MongoDb
+
 ## Next Features
 - Implement Auth with JWT on creating properties
 - Implement logs
