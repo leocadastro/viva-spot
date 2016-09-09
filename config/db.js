@@ -6,7 +6,12 @@ var Province = mongoose.model('Province');
 var Property = mongoose.model('Property');
 
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/viva-challenge');
+
+if(process.env.NODE_ENV == 'production'){
+	//Production connection
+} else {
+	mongoose.connect('mongodb://localhost/viva-challenge');
+}
 
 mongoose.connection.on('connected', function () {
 	seedProvinces();
