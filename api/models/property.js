@@ -47,6 +47,10 @@ var schema = mongoose.Schema({
 	provinces: {
 		type: [String]
 	}
+}, {
+    versionKey: false
 });
+
+schema.virtual('id').get(function() { return this._id; });
 
 module.exports = mongoose.model('Property', schema);

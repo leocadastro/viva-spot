@@ -37,17 +37,6 @@ var schema = mongoose.Schema({
 	}
 });
 
-/*schema.statics = {
-	findByCoordinates: function(x, y) {
-	  return this.find({
-		  'boundaries.upperLeft.x': { $lte: x },
-		  'boundaries.upperLeft.y': { $gte: y },
-		  'boundaries.bottomRight.x': { $gte: x },
-		  'boundaries.bottomRight.y': { $lte: y}
-	  });
-	}
-}*/
-
 schema.statics.findByCoordinates = function(x, y) {
 	  return this.find({
 		  'boundaries.upperLeft.x': { $lte: x },

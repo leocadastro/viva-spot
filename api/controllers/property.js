@@ -71,9 +71,10 @@ var postProperty = function (req, res, next) {
 			Property
 				.create(newProperty)
 				.then(function (property) {
-					res.status(200).send({
-				        message: "property inserted with success",
-						entityId: property._id
+					res.location('/properties/' + property._id)
+					res.status(201).send({
+				        message: "property created with success",
+						entityId: property.id
 				    });
 				}, function (error) {
 					res.status(500).send({

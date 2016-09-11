@@ -23,7 +23,7 @@ describe('/properties', function() {
 
   describe('post', function() {
 
-    it('should respond with 200 Success', function(done) {
+    it('should respond with 201 Created', function(done) {
       /*eslint-disable*/
       var schema = {
         "type": "object",
@@ -57,7 +57,7 @@ describe('/properties', function() {
 			  "provinces": ['Gode']
 		  })
           .end(function(err, res) {
-			expect(res.statusCode).to.equal(200);
+			expect(res.statusCode).to.equal(201);
 			expect(validator.validate(res.body, schema)).to.be.true;
             done();
 		});

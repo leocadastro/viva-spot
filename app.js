@@ -19,9 +19,8 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
   // install middleware
   swaggerExpress.register(app);
 
-  app.listen(app.get('port'));
+  app.listen(app.get('port'), function () {
+  	console.log("Server running on port " + app.get('port'));
+  });
 
-  if (swaggerExpress.runner.swagger.paths['/hello']) {
-    console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
-  }
 });

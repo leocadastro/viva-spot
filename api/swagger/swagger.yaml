@@ -24,8 +24,8 @@ paths:
           schema:
             $ref: "#/definitions/Property"
        responses:
-         "200":
-           description: Success
+         "201":
+           description: Created
            schema:
              $ref: "#/definitions/GeneralResponse"
          default:
