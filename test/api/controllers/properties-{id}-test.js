@@ -15,7 +15,7 @@ describe('/properties/{id}', function() {
       /*eslint-disable*/
       var schema = {
         "required": [
-          "_id",
+          "id",
           "title",
           "price",
           "x",
@@ -26,7 +26,7 @@ describe('/properties/{id}', function() {
           "squareMeters"
         ],
         "properties": {
-          "_id": {
+          "id": {
             "type": "string"
           },
           "title": {
@@ -72,7 +72,7 @@ describe('/properties/{id}', function() {
 		}).save(function (err, property) {
 
 			request(app)
-	            .get('/v1/properties/' + property._id)
+	            .get('/v1/properties/' + property.id)
 	            .set('Accept', 'application/json')
 	            .expect(200)
 	            .end(function(err, res) {

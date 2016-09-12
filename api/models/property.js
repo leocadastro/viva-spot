@@ -53,4 +53,22 @@ var schema = mongoose.Schema({
 
 schema.virtual('id').get(function() { return this._id; });
 
+schema.set('toJSON', {
+    transform: function(doc, ret, options) {
+        var obj = {
+            id: ret._id,
+			x: ret.x,
+			y: ret.y,
+			title: ret. title,
+			price: ret.price,
+			description: ret.description,
+			beds: ret.beds,
+			baths: ret.baths,
+			squareMeters: ret.squareMeters,
+			provinces: ret.provinces
+        };
+        return obj;
+    }
+});
+
 module.exports = mongoose.model('Property', schema);

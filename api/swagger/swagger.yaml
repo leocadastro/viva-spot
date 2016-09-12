@@ -112,7 +112,7 @@ definitions:
           $ref: "#/definitions/Property"
   GetPropertyResponse:
     required:
-      - _id
+      #- _id
       - title
       - price
       - x
@@ -122,8 +122,8 @@ definitions:
       - provinces
       - squareMeters
     properties:
-      _id:
-        type: string
+      #_id:
+    #    type: string
       title:
         type: string
       price:

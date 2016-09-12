@@ -27,7 +27,7 @@ var getProperty = function (req, res, next) {
 				return next();
 			}
 
-			res.status(200).send(property);
+			res.status(200).send(property.toJSON());
 
 			return next();
 
@@ -71,7 +71,7 @@ var postProperty = function (req, res, next) {
 			Property
 				.create(newProperty)
 				.then(function (property) {
-					res.location('/properties/' + property._id)
+					res.location('/properties/' + property.id)
 					res.status(201).send({
 				        message: "property created with success",
 						entityId: property.id
