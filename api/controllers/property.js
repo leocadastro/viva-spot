@@ -27,7 +27,7 @@ var getProperty = function (req, res, next) {
 				return next();
 			}
 
-			res.status(200).send(property.toJSON());
+			res.status(200).send(property);
 
 			return next();
 
@@ -43,12 +43,22 @@ var getProperty = function (req, res, next) {
 
 var postProperty = function (req, res, next) {
 
-	var newProperty = req.swagger.params.property.value;
-
-	if (!newProperty) {
+	var reqProperty = req.swagger.params.property.value;
+	if (!reqProperty) {
 		res.status(500).send({
 			message: "Something wrong"
 		});
+		return next()
+	}
+
+	var newProperty = new Property(reqProperty);
+
+	var erro = newProperty.validateSync();
+	if(erro != undefined)
+	{
+		res.status(422).send(erro);
+
+		return next()
 	}
 
 	Province
@@ -68,21 +78,20 @@ var postProperty = function (req, res, next) {
 
 			newProperty.provinces = names;
 
-			Property
-				.create(newProperty)
-				.then(function (property) {
-					res.location('/properties/' + property.id)
-					res.status(201).send({
-				        message: "property created with success",
-						entityId: property.id
-				    });
-				}, function (error) {
-					res.status(500).send({
-				        message: JSON.stringify(error)
-				    });
+			newProperty.save()
+			.then(function (property) {
+				res.location('/properties/' + property.id)
+				res.status(201).send({
+					message: "property created with success",
+					entityId: property.id
+				});
+			}, function (error) {
+				res.status(500).send({
+					message: JSON.stringify(error)
+				});
 
-					return next(error);
-				})
+				return next(error);
+			})
 
 		}, function (error) {
 			res.status(500).send({

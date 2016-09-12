@@ -83,8 +83,6 @@ describe('/properties', function() {
         }
       };
 
-	  var id = "";
-
 	  request(app)
           .post('/v1/properties')
           .set('Accept', 'application/json')
@@ -129,8 +127,6 @@ describe('/properties', function() {
           }
         }
       };
-
-	  var id = "";
 
 	  request(app)
           .post('/v1/properties')
@@ -177,8 +173,6 @@ describe('/properties', function() {
         }
       };
 
-	  var id = "";
-
 	  request(app)
           .post('/v1/properties')
           .set('Accept', 'application/json')
@@ -223,8 +217,6 @@ describe('/properties', function() {
           }
         }
       };
-
-	  var id = "";
 
 	  request(app)
           .post('/v1/properties')
@@ -271,8 +263,6 @@ describe('/properties', function() {
         }
       };
 
-	  var id = "";
-
 	  request(app)
           .post('/v1/properties')
           .set('Accept', 'application/json')
@@ -317,8 +307,6 @@ describe('/properties', function() {
 		  }
 		}
 	  };
-
-	  var id = "";
 
 	  request(app)
 		  .post('/v1/properties')
@@ -365,8 +353,6 @@ describe('/properties', function() {
 		}
 	  };
 
-	  var id = "";
-
 	  request(app)
 		  .post('/v1/properties')
 		  .set('Accept', 'application/json')
@@ -393,7 +379,7 @@ describe('/properties', function() {
 
 	});
 
-    it('should respond with default Error', function(done) {
+    it('should respond with 422 invalid parameter beds', function(done) {
       /*eslint-disable*/
       var schema = {
         "required": [
@@ -410,18 +396,289 @@ describe('/properties', function() {
           .post('/v1/properties')
           .set('Accept', 'application/json')
 		  .send({
-			  "x": 9999,
+			  "x": 222,
 			  "y": 600,
 			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
 			  "price": 1250000,
 			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-			  "beds": 2,
+			  "beds": 6,
 			  "baths": 3,
 			  "squareMeters": 210
 		  })
           .end(function(err, res) {
-			expect(res.statusCode).to.equal(404);
-			expect(res.body.message).to.equal('Province not found');
+			expect(res.statusCode).to.equal(422);
+			expect(res.body.message).to.equal('Property validation failed');
+			expect(validator.validate(res.body, schema)).to.be.true;
+		});
+
+		request(app)
+            .post('/v1/properties')
+            .set('Accept', 'application/json')
+  		  .send({
+  			  "x": 222,
+  			  "y": 600,
+  			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+  			  "price": 1250000,
+  			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  			  "beds": 0,
+  			  "baths": 3,
+  			  "squareMeters": 210
+  		  })
+            .end(function(err, res) {
+  			expect(res.statusCode).to.equal(422);
+  			expect(res.body.message).to.equal('Property validation failed');
+  			expect(validator.validate(res.body, schema)).to.be.true;
+            done();
+  		});
+
+    });
+
+	it('should respond with 422 invalid parameter baths', function(done) {
+      /*eslint-disable*/
+      var schema = {
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      };
+
+	  request(app)
+          .post('/v1/properties')
+          .set('Accept', 'application/json')
+		  .send({
+			  "x": 222,
+			  "y": 600,
+			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+			  "price": 1250000,
+			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+			  "beds": 3,
+			  "baths": 5,
+			  "squareMeters": 210
+		  })
+          .end(function(err, res) {
+			expect(res.statusCode).to.equal(422);
+			expect(res.body.message).to.equal('Property validation failed');
+			expect(validator.validate(res.body, schema)).to.be.true;
+            //done();
+		});
+
+		request(app)
+            .post('/v1/properties')
+            .set('Accept', 'application/json')
+  		  .send({
+  			  "x": 222,
+  			  "y": 600,
+  			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+  			  "price": 1250000,
+  			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  			  "beds": 3,
+  			  "baths": 0,
+  			  "squareMeters": 210
+  		  })
+            .end(function(err, res) {
+  			expect(res.statusCode).to.equal(422);
+  			expect(res.body.message).to.equal('Property validation failed');
+  			expect(validator.validate(res.body, schema)).to.be.true;
+            done();
+  		});
+
+    });
+
+	it('should respond with 422 invalid parameter squareMeters', function(done) {
+      /*eslint-disable*/
+      var schema = {
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      };
+
+	  request(app)
+          .post('/v1/properties')
+          .set('Accept', 'application/json')
+		  .send({
+			  "x": 222,
+			  "y": 600,
+			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+			  "price": 1250000,
+			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+			  "beds": 3,
+			  "baths": 2,
+			  "squareMeters": 241
+		  })
+          .end(function(err, res) {
+			expect(res.statusCode).to.equal(422);
+			expect(res.body.message).to.equal('Property validation failed');
+			expect(validator.validate(res.body, schema)).to.be.true;
+		});
+
+		request(app)
+            .post('/v1/properties')
+            .set('Accept', 'application/json')
+  		  .send({
+  			  "x": 222,
+  			  "y": 600,
+  			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+  			  "price": 1250000,
+  			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  			  "beds": 3,
+  			  "baths": 2,
+  			  "squareMeters": 19
+  		  })
+            .end(function(err, res) {
+  			expect(res.statusCode).to.equal(422);
+  			expect(res.body.message).to.equal('Property validation failed');
+  			expect(validator.validate(res.body, schema)).to.be.true;
+            done();
+  		});
+
+    });
+
+	it('should respond with 422 invalid parameter x', function(done) {
+      /*eslint-disable*/
+      var schema = {
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      };
+
+	  request(app)
+          .post('/v1/properties')
+          .set('Accept', 'application/json')
+		  .send({
+			  "x": 1401,
+			  "y": 600,
+			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+			  "price": 1250000,
+			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+			  "beds": 3,
+			  "baths": 2,
+			  "squareMeters": 200
+		  })
+          .end(function(err, res) {
+			expect(res.statusCode).to.equal(422);
+			expect(res.body.message).to.equal('Property validation failed');
+			expect(validator.validate(res.body, schema)).to.be.true;
+		});
+
+		request(app)
+            .post('/v1/properties')
+            .set('Accept', 'application/json')
+  		  .send({
+  			  "x": -1,
+  			  "y": 600,
+  			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+  			  "price": 1250000,
+  			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  			  "beds": 3,
+  			  "baths": 2,
+  			  "squareMeters": 200
+  		  })
+            .end(function(err, res) {
+  			expect(res.statusCode).to.equal(422);
+  			expect(res.body.message).to.equal('Property validation failed');
+  			expect(validator.validate(res.body, schema)).to.be.true;
+            done();
+  		});
+
+    });
+
+	it('should respond with 422 invalid parameter y', function(done) {
+      /*eslint-disable*/
+      var schema = {
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      };
+
+	  request(app)
+          .post('/v1/properties')
+          .set('Accept', 'application/json')
+		  .send({
+			  "x": 222,
+			  "y": 1001,
+			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+			  "price": 1250000,
+			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+			  "beds": 3,
+			  "baths": 2,
+			  "squareMeters": 200
+		  })
+          .end(function(err, res) {
+			expect(res.statusCode).to.equal(422);
+			expect(res.body.message).to.equal('Property validation failed');
+			expect(validator.validate(res.body, schema)).to.be.true;
+		});
+
+		request(app)
+            .post('/v1/properties')
+            .set('Accept', 'application/json')
+  		  .send({
+  			  "x": 222,
+  			  "y": -1,
+  			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+  			  "price": 1250000,
+  			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  			  "beds": 3,
+  			  "baths": 2,
+  			  "squareMeters": 200
+  		  })
+            .end(function(err, res) {
+  			expect(res.statusCode).to.equal(422);
+  			expect(res.body.message).to.equal('Property validation failed');
+  			expect(validator.validate(res.body, schema)).to.be.true;
+            done();
+  		});
+
+    });
+
+	it('should respond with 400 bad request for invalid parameters', function(done) {
+      /*eslint-disable*/
+      var schema = {
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      };
+
+	  request(app)
+          .post('/v1/properties')
+          .set('Accept', 'application/json')
+		  .send({
+			  "x": "x",
+			  "y": "y",
+			  "title": "Imóvel código 13, com 5 quartos e 4 banheiros",
+			  "price": "price",
+			  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+			  "beds": "beds",
+			  "baths": "baths",
+			  "squareMeters": "squareMeters"
+		  })
+          .end(function(err, res) {
+			expect(res.statusCode).to.equal(400);
+			expect(res.body.message).to.equal('Request validation failed: Parameter (property) failed schema validation');
 			expect(validator.validate(res.body, schema)).to.be.true;
             done();
 		});

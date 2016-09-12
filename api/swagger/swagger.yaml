@@ -112,7 +112,6 @@ definitions:
           $ref: "#/definitions/Property"
   GetPropertyResponse:
     required:
-      #- _id
       - title
       - price
       - x
@@ -122,26 +121,24 @@ definitions:
       - provinces
       - squareMeters
     properties:
-      #_id:
-    #    type: string
       title:
         type: string
       price:
-        type: number
+        type: integer
       x:
-        type: number
+        type: integer
       y:
-        type: number
+        type: integer
       beds:
-        type: number
+        type: integer
       baths:
-        type: number
+        type: integer
       provinces:
         type: array
         items:
           type: string
       squareMeters:
-        type: number
+        type: integer
   Property:
     required:
       - title
