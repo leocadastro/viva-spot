@@ -7,9 +7,6 @@ The legend: [Spotippo](https://github.com/VivaReal/code-challenge/blob/master/ba
 - Run the project
 - Access: `/docs`
 
-## Doc 2
-- Run the project again
-
 ## Endpoints
 - Create a property: `/v1/properties` [POST]
 - Get a property by Id: `/v1/properties/{id}` [GET]
